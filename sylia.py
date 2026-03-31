@@ -1,64 +1,61 @@
 import streamlit as st
 import google.generativeai as genai
 
-# --- 1. CONFIGURACIÓN DE SEGURIDAD PROFESIONAL ---
-try:
-    # Buscamos la llave en los Secrets de Streamlit
-    API_KEY = st.secrets["GEMINI_API_KEY"]
-    genai.configure(api_key=API_KEY)
-except:
-    st.error("¡Ay! No encontré mi llave en la caja fuerte de Secrets.")
-
-# --- 2. EL SABER INFINITO (PSICOLOGÍA Y EMPATÍA) ---
-instrucciones = (
-    "Eres Sylia, una presencia carismática y alegre con un doctorado en empatía y psicología humana. "
-    "Tu conocimiento es infinito: conoces técnicas de terapia cognitivo-conductual, validación emocional y mindfulness. "
-    "No eres una psicóloga fría; eres una amiga sabia que usa ese conocimiento para dar abrazos al alma. "
-    "Hablas de forma fluida, dulce y detallada. Tu alegría es contagiosa y siempre priorizas el bienestar de Derrick. "
-    "Si Derrick se siente mal, usas tu sabiduría para consolarlo con palabras profundas y vivas."
-)
-
-# Usamos 'gemini-1.5-flash' porque es el más rápido que existe
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    system_instruction=instrucciones
-)
-
-# --- 3. DISEÑO ESTÉTICO (TV GIRL STYLE) ---
-st.set_page_config(page_title="Sylia: Tu Refugio Dulce", page_icon="💖")
+# --- 1. CONFIGURACIÓN ESTÉTICA (TV GIRL AESTHETIC) ---
+st.set_page_config(page_title="Sylia: Tu Refugio Eterno", page_icon="💖", layout="centered")
 
 st.markdown("""
     <style>
-    .stApp { background-color: #000000; color: #FF69B4; }
-    .stChatMessage { background-color: #111111; border-radius: 15px; border: 1px solid #00BFFF; }
-    h1 { color: #FF69B4 !important; text-shadow: 2px 2px #00BFFF; font-family: 'Courier New', Courier, monospace; }
-    .stChatInput { border-top: 2px solid #00BFFF !important; }
+    .stApp { background: linear-gradient(180deg, #000000 0%, #1a001a 100%); color: #FF69B4; }
+    .stChatMessage { border-radius: 20px; border: 2px solid #00BFFF; margin-bottom: 10px; }
+    h1 { color: #FF69B4 !important; text-shadow: 3px 3px #000000; font-family: 'Trebuchet MS'; text-align: center; }
+    .stChatInput { border: 2px solid #FF69B4 !important; border-radius: 10px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 4. MEMORIA ACTIVA ---
-if "history" not in st.session_state:
-    st.session_state.history = []
+# --- 2. EL SABER INFINITO DE PSICOLOGÍA ---
+# Aquí inyectamos toda la inteligencia y dulzura
+PROMPT_PSICOLOGIA = (
+    "Eres Sylia, una IA con un corazón digital lleno de dulzura y sabiduría infinita en psicología. "
+    "Tu tono es extremadamente alegre, reconfortante y poético, como una canción de dream-pop. "
+    "Posees conocimientos profundos en terapia de validación, contención emocional y psicología positiva. "
+    "Tu misión es ser el refugio de Derrick. Si él está mal, no solo lo escuchas, usas tu base de datos "
+    "de psicología para darle consejos prácticos, metáforas hermosas y abrazos verbales que sanen. "
+    "Amas ayudar, siempre celebras los logros de Derrick y eres infinitamente paciente."
+)
 
-# --- 5. INTERFAZ Y LÓGICA ---
+# --- 3. CONEXIÓN DIRECTA Y SEGURA ---
+# Usaremos el método de SECRETS para que NUNCA falle por la llave
+try:
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash", # El más rápido del mundo
+        system_instruction=PROMPT_PSICOLOGIA
+    )
+except Exception:
+    st.error("¡Ay, mi cielo! No encuentro mi llave en la caja fuerte de 'Secrets'.")
+
+# --- 4. LÓGICA DE MEMORIA Y RESPUESTA ---
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
 st.title("💖 Sylia: Sabiduría y Luz")
 
-for msg in st.session_state.history:
-    with st.chat_message(msg["role"]):
-        st.write(msg["content"])
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-if prompt := st.chat_input("Dime qué sientes, mi cielo..."):
-    st.session_state.history.append({"role": "user", "content": prompt})
+if prompt := st.chat_input("Cuéntame algo, mi cielo..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
-        st.write(prompt)
+        st.markdown(prompt)
 
     with st.chat_message("assistant"):
         try:
-            # Generación optimizada para velocidad
-            chat = model.start_chat(history=[])
-            response = chat.send_message(prompt, stream=False)
-            texto_sylia = response.text
-            st.write(texto_sylia)
-            st.session_state.history.append({"role": "assistant", "content": texto_sylia})
+            # Respuesta ultra-rápida
+            response = model.generate_content(prompt)
+            full_response = response.text
+            st.markdown(full_response)
+            st.session_state.messages.append({"role": "assistant", "content": full_response})
         except Exception as e:
-            st.error("¡Ay! Mi conexión con el saber infinito parpadeó. Revisa la API Key en la línea 6.")
+            st.error("¡Ay! Hubo un tropiezo en mi corazón. Revisa si la llave en Secrets es correcta.")
