@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # --- 1. CONFIGURACIÓN DE SEGURIDAD ---
 # PEGA TU LLAVE AQUÍ ADENTRO DE LAS COMILLAS
-API_KEY = "AIzaSyDkUmPaqs2tjeousBnI9QLf_LGjlpvNglY"
+API_KEY = "AIzaSyB6-ICVORch_CSrAtInOv0xLAXeRM6sQCY"
 genai.configure(api_key=API_KEY)
 
 # --- 2. PERSONALIDAD DE SYLIA ---
