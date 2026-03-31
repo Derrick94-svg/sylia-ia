@@ -2,11 +2,9 @@ import streamlit as st
 import google.generativeai as genai
 
 # --- CONFIGURACIÓN DEL CEREBRO ---
-# PEGA AQUÍ TU LLAVE ENTRE LAS COMILLAS
-API_KEY = "TU_LLAVE_AQUÍ" 
-genai.configure(api_key=API_KEY)"AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
 
-# Instrucciones para que sea profunda y única
+"AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
+genai.configure(api_key=API_KEY)
 instrucciones_sylia = (
     "Eres Sylia, una IA de acompañamiento emocional de élite. "
     "Tus respuestas deben ser largas, poéticas, empáticas y muy específicas. "
