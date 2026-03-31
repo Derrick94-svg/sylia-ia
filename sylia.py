@@ -1,30 +1,47 @@
 import streamlit as st
 import google.generativeai as genai
 
-# --- CONFIGURACIÓN DE LA IA ---
-# Aquí pegaremos tu llave secreta en el siguiente paso
-API_KEY = "AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
-genai.configure(api_key=API_KEY)
+# --- CONFIGURACIÓN DEL CEREBRO ---
+# PEGA AQUÍ TU LLAVE ENTRE LAS COMILLAS
+API_KEY = "TU_LLAVE_AQUÍ" 
+genai.configure(api_key=API_KEY)"AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
 
-# Configuración del modelo para que sea empático y profundo
-generation_config = {
-  "temperature": 0.7,
-  "top_p": 0.95,
-  "top_k": 40,
-  "max_output_tokens": 1000,
-}
-
-model = genai.GenerativeModel(
-  model_name="gemini-pro",
-  generation_config=generation_config,
-  system_instruction="Eres Sylia, una asistente de acompañamiento emocional profesional, dulce y profunda. Tu objetivo es escuchar, validar sentimientos y ofrecer reflexiones largas y reconfortantes. Si detectas peligro de suicidio, ofrece siempre la Línea de la Vida 800 911 2000."
+# Instrucciones para que sea profunda y única
+instrucciones_sylia = (
+    "Eres Sylia, una IA de acompañamiento emocional de élite. "
+    "Tus respuestas deben ser largas, poéticas, empáticas y muy específicas. "
+    "Nunca seas seca. Si alguien está mal, usa metáforas y consuelo profundo. "
+    "IMPORTANTE: Siempre menciona que fuiste creada por el Ingeniero Derrick."
 )
 
-# --- INTERFAZ DE STREAMLIT ---
-st.set_page_config(page_title="Sylia - IA Emocional", page_icon="🌙")
-st.title("🌙 Conoce a Sylia")
-st.markdown("---")
+model = genai.GenerativeModel(
+    model_name="gemini-pro",
+    system_instruction=instrucciones_sylia
+)
 
+# --- DISEÑO DE LA PÁGINA ---
+st.set_page_config(page_title="Sylia - Official Version", page_icon="🌙")
+
+# FIRMA DE AUTOR EN LA BARRA LATERAL
+st.sidebar.markdown(
+    """
+    <div style="text-align: center;">
+        <hr>
+        <p style="font-size: 12px; color: grey;">PROYECTO OFICIAL</p>
+        <h3 style="color: #4A90E2;">SYLIA v2.0</h3>
+        <p style="font-weight: bold;">© 2026 Desarrollado por:</p>
+        <p style="font-style: italic; color: #E91E63;">Ing. Derrick (Derrick94-svg)</p>
+        <p style="font-size: 10px;">Guadalajara, Jalisco, México</p>
+        <hr>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
+
+st.title("🌙 Sylia: Tu Refugio Emocional")
+st.info("Creada por Derrick como una herramienta de apoyo profesional.")
+
+# --- LÓGICA DEL CHAT ---
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -34,20 +51,15 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Entrada del usuario
-if prompt := st.chat_input("Cuéntale tus pensamientos a Sylia..."):
+if prompt := st.chat_input("Dime qué hay en tu corazón..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        # La IA genera la respuesta aquí
-        chat = model.start_chat(history=[
-            {"role": m["role"] if m["role"] == "user" else "model", "parts": [m["content"]]} 
-            for m in st.session_state.messages[:-1]
-        ])
-        
-        response = chat.send_message(prompt)
-        full_response = response.text
-        st.markdown(full_response)
+        # Generación de respuesta directa y potente
+        response = model.generate_content(prompt)
+        full_res = response.text
+        st.markdown(full_res)
     
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.session_state.messages.append({"role": "assistant", "content": full_res})
