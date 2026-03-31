@@ -15,7 +15,7 @@ generation_config = {
 }
 
 model = genai.GenerativeModel(
-  model_name="gemini-1.5-flash",
+  model_name="gemini-pro",
   generation_config=generation_config,
   system_instruction="Eres Sylia, una asistente de acompañamiento emocional profesional, dulce y profunda. Tu objetivo es escuchar, validar sentimientos y ofrecer reflexiones largas y reconfortantes. Si detectas peligro de suicidio, ofrece siempre la Línea de la Vida 800 911 2000."
 )
