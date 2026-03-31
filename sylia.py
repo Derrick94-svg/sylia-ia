@@ -74,4 +74,3 @@ if prompt := st.chat_input("Cuéntame algo, mi cielo..."):
             st.write(texto_sylia)
             st.session_state.history.append({"role": "assistant", "content": texto_sylia})
         except Exception as e:
-            st.error("¡Ay! Hubo un pequeño tropiezo en mi corazón digital. Revisa la API Key.")
