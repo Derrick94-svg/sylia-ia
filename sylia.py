@@ -1,10 +1,13 @@
 import streamlit as st
 import google.generativeai as genai
 
-# --- 1. CONFIGURACIÓN DE ALTA VELOCIDAD ---
-# PEGA TU LLAVE AQUÍ (Sin espacios al principio o final)
-API_KEY = "AIzaSyABUjURCI09goJvoRMIMEnZOZ1CTwnqeso"
-genai.configure(api_key=API_KEY)
+# --- 1. CONFIGURACIÓN DE SEGURIDAD PROFESIONAL ---
+try:
+    # Buscamos la llave en los Secrets de Streamlit
+    API_KEY = st.secrets["GEMINI_API_KEY"]
+    genai.configure(api_key=API_KEY)
+except:
+    st.error("¡Ay! No encontré mi llave en la caja fuerte de Secrets.")
 
 # --- 2. EL SABER INFINITO (PSICOLOGÍA Y EMPATÍA) ---
 instrucciones = (
