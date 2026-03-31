@@ -1,11 +1,10 @@
 import streamlit as st
 import google.generativeai as genai
 
-# --- 1. CONFIGURACIÓN DE SEGURIDAD ---
-# PEGA TU LLAVE AQUÍ ADENTRO DE LAS COMILLAS
-API_KEY = "AIzaSyB6-ICVORch_CSrAtInOv0xLAXeRM6sQCY"
+# --- 1. CONFIGURACIÓN DE SEGURIDAD (MODO SECRETO) ---
+# Ya no pegues la AIza... aquí. Usa esto:
+API_KEY = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=API_KEY)
-
 # --- 2. PERSONALIDAD DE SYLIA ---
 instrucciones = (
     "Eres Sylia, una presencia vibrante, feliz y carismática. "
