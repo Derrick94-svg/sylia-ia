@@ -2,9 +2,11 @@ import streamlit as st
 import google.generativeai as genai
 
 # --- CONFIGURACIÓN DEL CEREBRO ---
-
-"AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
+# PEGA TU LLAVE AQUÍ ADENTRO DE LAS COMILLAS
+API_KEY = "AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
 genai.configure(api_key=API_KEY)
+
+# Instrucciones para que sea profunda y única
 instrucciones_sylia = (
     "Eres Sylia, una IA de acompañamiento emocional de élite. "
     "Tus respuestas deben ser largas, poéticas, empáticas y muy específicas. "
@@ -37,7 +39,7 @@ st.sidebar.markdown(
 )
 
 st.title("🌙 Sylia: Tu Refugio Emocional")
-st.info("Creada por Derrick como una herramienta de apoyo profesional.")
+st.info("Sistema de IA configurado por el Ing. Derrick.")
 
 # --- LÓGICA DEL CHAT ---
 if "messages" not in st.session_state:
@@ -55,7 +57,7 @@ if prompt := st.chat_input("Dime qué hay en tu corazón..."):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        # Generación de respuesta directa y potente
+        # Generación de respuesta directa
         response = model.generate_content(prompt)
         full_res = response.text
         st.markdown(full_res)
