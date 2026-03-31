@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # --- CONFIGURACIÓN DEL CEREBRO ---
 # PEGA TU LLAVE AQUÍ ADENTRO DE LAS COMILLAS
-API_KEY="AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ"
+API_KEY="AIzaSyDBatFUBbKFSxFhsi9jXS9yJfiMJ6EvzLw"
 genai.configure(api_key=API_KEY)
 
 # Instrucciones para que sea profunda y única
