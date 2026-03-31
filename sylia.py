@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # --- CONFIGURACIÓN DE LA IA ---
 # Aquí pegaremos tu llave secreta en el siguiente paso
-API_KEY = AIzaSyCs3rqlkhkHI3AY1ZmS-wG_3CA7yFsEGhQ
+API_KEY = "AIzaSyCs3rqlkhkHI3AY1ZmS"-wG_3CA7yFsEGhQ
 genai.configure(api_key=API_KEY)
 
 # Configuración del modelo para que sea empático y profundo
